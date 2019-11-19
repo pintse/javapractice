@@ -10,7 +10,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.config.RegistryBuilder;
 import org.apache.http.conn.socket.ConnectionSocketFactory;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
-import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
@@ -37,7 +37,7 @@ public class HttpConnector {
 
         }).build();
         b.setSSLContext(sslContext);
-        HostnameVerifier hostnameVerifier = AllowAllHostnameVerifier.INSTANCE;
+        HostnameVerifier hostnameVerifier = NoopHostnameVerifier.INSTANCE;
         SSLConnectionSocketFactory sslSocketFactory = new SSLConnectionSocketFactory(sslContext, hostnameVerifier);
         PoolingHttpClientConnectionManager connMgr = new PoolingHttpClientConnectionManager(RegistryBuilder.<ConnectionSocketFactory> create()
                 .register("http", PlainConnectionSocketFactory.getSocketFactory()).register("https", sslSocketFactory).build());
